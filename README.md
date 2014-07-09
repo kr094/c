@@ -1,8 +1,6 @@
 c
 =
 
-Linked list in c
-
 You would be interested in:
 
 LinkedList/
