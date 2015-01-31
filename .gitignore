@@ -35,8 +35,10 @@ Icon
 .Spotlight-V100
 .Trashes
 
-bin/
-autogen/
+# Dev CPP Files
+*.dev
+*.layout
 
+# Binaries
 *.o
 *.exe

@@ -1,0 +1,31 @@
+# Project: getl
+# Makefile created by Dev-C++ 5.6.0
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = getl.o main.o
+LINKOBJ  = getl.o main.o
+LIBS     = -L"F:/c-workspace/Dev-Cpp/MinGW64/lib" -L"F:/c-workspace/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+INCS     = -I"F:/c-workspace/Dev-Cpp/MinGW64/include" -I"F:/c-workspace/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"F:/c-workspace/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include"
+CXXINCS  = -I"F:/c-workspace/Dev-Cpp/MinGW64/include" -I"F:/c-workspace/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"F:/c-workspace/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include" -I"F:/c-workspace/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include/c++"
+BIN      = getl.exe
+CXXFLAGS = $(CXXINCS) -g3 -fverbose-asm
+CFLAGS   = $(INCS) -g3 -fverbose-asm
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+getl.o: getl.c
+	$(CC) -c getl.c -o getl.o $(CFLAGS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
