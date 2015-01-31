@@ -35,4 +35,8 @@ Icon
 .Spotlight-V100
 .Trashes
 
+bin/
+autogen/
+
+*.o
 *.exe
