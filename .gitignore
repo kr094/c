@@ -39,6 +39,9 @@ Icon
 *.dev
 *.layout
 
+Visual Studio Files
+Debug/
+
 # Binaries
 *.o
 *.exe
