@@ -1,14 +1,4 @@
-#include "helpers.h"
-
-void die(int code, char *message) {
-	printf("Exit (%d)", code);
-
-	if(message)
-		printf(": %s", message);
-
-	puts("");
-	exit(code);
-}
+#include "functions.h"
 
 char *getl(char *prompt) {
 	const int BUFFER = 120;
@@ -19,12 +9,13 @@ char *getl(char *prompt) {
 	long pos = 0;
 	
 	str = (char *) malloc(size);
+
 	if(!str)
 		return 0;
 
 	if(prompt) {
-		fputs(prompt, stdout);
-		fputs(" ", stdout);
+		say(prompt);
+		say(" ");
 	}
 		
 	for(; str && (str[pos] = getchar()) != '\n'; pos++) {		
@@ -44,4 +35,18 @@ char *getl(char *prompt) {
 	
 	str[pos] = '\0';	
 	return str;
+}
+
+void say(char *message) {
+	fputs(message, stdout);
+}
+
+void die(int code, char *message) {
+	printf("Exit (%d)", code);
+
+	if(message)
+		printf(": %s", message);
+
+	puts("");
+	exit(code);
 }

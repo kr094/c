@@ -24,7 +24,7 @@
     <ClInclude Include="alloc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="helpers.h">
+    <ClInclude Include="functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,7 +41,7 @@
     <ClCompile Include="Node.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="helpers.c">
+    <ClCompile Include="functions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

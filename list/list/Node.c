@@ -17,7 +17,11 @@ node_t node_new_data(void *data) {
 	return node;
 }
 
+void node_print(node_t node) {
+	if(node)
+		puts((char *) node->data);
+}
+
 void node_free(node_t node) {
-	free(node->data);
 	free(node);
 }
