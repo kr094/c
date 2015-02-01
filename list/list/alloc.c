@@ -1,7 +1,7 @@
 #include "alloc.h"
 
-int alloc(int size, void **retptr) {
-	void *target = 0;
+int alloc(size_t size, void **retptr) {
+	void *target = NULL;
 	
 	target = malloc(size);
 	if(!target)
@@ -9,4 +9,9 @@ int alloc(int size, void **retptr) {
 		
 	*retptr = target;
 	return 1;
+}
+
+void alloc_struct(size_t size, void **retptr) {
+	if(!alloc(size, retptr))
+		die(1, "alloc_struct: No memory");
 }
