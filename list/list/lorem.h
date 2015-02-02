@@ -1,0 +1,2 @@
+#ifndef LOREM
+#endif

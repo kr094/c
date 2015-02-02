@@ -11,7 +11,7 @@ int main() {
 }
 
 void run() {
-	list_t list = list_new();
+	list_t list = list_new(0);
 
 	test(list);
 	//manual_test(list);
@@ -22,18 +22,24 @@ void run() {
 void test(list_t list) {
 	int i = 0;
 	char *elem[] = {"1", "2", "3"};
+	
+	list_push(list, (void *) "1");
+	for(i; i < 90000; i++) {
+		list_push(list, "2");
+	}
+	list_push(list, (void *) "3");
 
-	for(i; i < 3; i++) {
-		list_push(list, (void *) elem[i]);
+	for(i = 0; i < 3; i++) {		
+		node_print(list_pop(list));
 	}
 	
 	list_printall(list);
 
-	/*list_prev(list);
+	list_prev(list);
 	list_print(list);
 	node_print(list_seek(list, 3));
 	node_print(list_start(list));
-	node_print(list_end(list));*/
+	node_print(list_end(list));
 
 	printf("size %d", list->size);
 }

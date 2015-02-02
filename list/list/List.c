@@ -1,29 +1,73 @@
 #include "List.h"
 
-list_t list_new() {
-		list_t list;
+list_t list_new(int new_pool) {
+	list_t list;
+	list_t pool;
+	int i = 0;
 
-		alloc_struct(sizeof(struct List), (void **) &list);
-		list->head = 0;
-		list->prev = 0;
-		list->size = 0;
-		list->curr = 0;
+	alloc_struct(sizeof(struct List), (void **) &list);
+	alloc_struct(sizeof(struct List), (void **) &pool);
 
-		return list;
+	if(new_pool > 0) {
+		list->pool_size = new_pool;
+	} else {
+		list->pool_size = 32;
+	}
+
+	init_list(list);
+	init_list(pool);
+	list->pool = pool;
+	init_pool(list);
+
+	return list;
+}
+
+void init_list(list_t list) {
+	list->head = NULL;
+	list->tail = NULL;
+	list->prev = NULL;
+	list->size = NULL;
+	list->curr = NULL;
+	list->pool = NULL;
+}
+
+void init_pool(list_t list) {
+	int i = 0;	
+
+	for(i; i < list->pool_size; i++) {
+		list_add_node(list->pool, node_new_data(NULL));
+	}
 }
 
 void list_inc_size(list_t list) {
 	list->size++;
 }
 
+void list_dec_size(list_t list) {
+	list->size--;
+}
+
 void list_set_head(list_t list, node_t node) {
 	list->head = node;
-	list->curr = list->head;
-	list_start(list);
+
+	if(!list->curr)
+		list->curr = list->head;
+}
+
+void list_set_tail(list_t list, node_t node) {
+	list->tail = node;
+}
+
+node_t list_get_free_node(list_t list) {
+	if(!list_peek(list->pool)) {
+		init_pool(list);
+	}
+	
+	return list_pop(list->pool);
 }
 
 void list_add(list_t list, void *data) {
-	node_t node = node_new_data(data);
+	node_t node = list_get_free_node(list);
 	list_add_node(list, node);
 }
 
@@ -43,7 +87,8 @@ void list_add_node(list_t list, node_t node) {
 }
 
 void list_push(list_t list, void *data) {
-	node_t node = node_new_data(data);
+	node_t node = list_get_free_node(list);
+	node->data = data;
 	list_push_node(list, node);
 }
 
@@ -59,10 +104,33 @@ void list_push_node(list_t list, node_t node) {
 	list_inc_size(list);
 }
 
+node_t list_pop(list_t list) {
+	node_t node = NULL;
+	node_t temp = NULL;
+
+	if(!list->head)
+		return NULL;
+	
+	node = node_copy(list->head);
+	temp = node_copy(list->head->next);		
+
+	node_free(list->head);
+	list->head = 0;
+	node->next = 0;
+	node->prev = 0;
+	list_start(list);
+	list_dec_size(list);	
+
+	if(temp) {
+		list_set_head(list, temp);
+	}
+
+	return node;
+}
+
 void list_print(list_t list) {
-	do {
+	while(list_next(list))
 		node_print(list_peek(list));
-	} while(list_next(list));
 }
 
 void list_printall(list_t list) {
@@ -73,9 +141,8 @@ void list_printall(list_t list) {
 void list_free(list_t list) {
 	list_start(list);
 
-	do {
+	while(list_next(list))
 		node_free(list->curr->prev);
-	} while(list_next(list));
 
 	free(list);
 }
@@ -96,11 +163,10 @@ node_t list_seek(list_t list, int index) {
 }
 
 node_t list_start(list_t list) {
-	if(list->head && list->curr->prev) {
+	if(list->curr != list->head) {
 		list->curr = list->head;
+		list->prev = NULL;
 	}
-
-	list->prev = NULL;
 
 	return list_peek(list);
 }
@@ -112,7 +178,7 @@ node_t list_end(list_t list) {
 }
 
 node_t list_next(list_t list) {
-	if(!list->curr->next)
+	if(!list->size)
 		return NULL;
 
 	list->prev = list->curr;
@@ -122,7 +188,7 @@ node_t list_next(list_t list) {
 }
 
 node_t list_prev(list_t list) {
-	if(!list->curr->prev)
+	if(!list->size)
 		return NULL;
 
 	list->curr = list->prev;
