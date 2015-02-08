@@ -54,15 +54,16 @@ void list_add(list_t list, void *data) {
 void list_add_node(list_t list, node_t node) {
 	if(!list->head) {
 		list_set_head(list, node);
+	} else if(!list->tail) {
+		node->prev = list->head;
+		list->head->next = node;
+		list->tail = node;
 	} else {
-		if(list->curr->next)
-			list_end(list);
-
-		node->prev = list->curr;
-		list->curr->next = node;
+		node->prev = list->tail;
+		list->tail->next = node;
+		list->tail = node;
 	}
-	
-	list_next(list);
+
 	list_inc_size(list);
 }
 
@@ -74,6 +75,7 @@ void list_push(list_t list, void *data) {
 void list_push_node(list_t list, node_t node) {
 	if(!list->head) {
 		list_set_head(list, node);
+		list_set_tail(list, node);
 	} else {
 		node->next = list->head;
 		list->head->prev = node;
@@ -98,6 +100,25 @@ node_t list_pop(list_t list) {
 
 	node_free(list->head);	
 	list_set_head(list, temp);
+	list_dec_size(list);
+	return node;
+}
+
+node_t list_unqueue(list_t list) {
+	node_t node = NULL;
+	node_t temp = NULL;
+
+	if(!list->tail)
+		return NULL;
+
+	node = node_new_data(list->tail->data);
+	temp = list->tail->prev;
+
+	if(temp) 
+		temp->next = NULL;
+
+	node_free(list->tail);
+	list_set_tail(list, temp);		
 	list_dec_size(list);
 	return node;
 }
@@ -137,7 +158,8 @@ node_t list_start(list_t list) {
 }
 
 node_t list_end(list_t list) {
-	while(list_next(list));
+	if(list->curr->next);
+		while(list_next(list));
 
 	return list_peek(list);
 }

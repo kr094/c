@@ -21,7 +21,7 @@ void list_add(list_t list, void *data);
 void list_push(list_t list, void *data);
 
 void list_add_node(list_t list, node_t node);
-//void list_unqueue(list_t list);
+node_t list_unqueue(list_t list);
 
 void list_push_node(list_t list, node_t node);
 node_t list_pop(list_t list);

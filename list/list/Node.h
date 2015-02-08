@@ -1,6 +1,6 @@
 #ifndef _NODE_H_
 #define _NODE_H_
-#include "functions.h"
+#include "alloc.h"
 typedef struct Node *node_t;
 
 struct Node {
