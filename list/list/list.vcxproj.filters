@@ -21,10 +21,10 @@
     <ClInclude Include="Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="alloc.h">
+    <ClInclude Include="functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="functions.h">
+    <ClInclude Include="die.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,13 +35,13 @@
     <ClCompile Include="List.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="alloc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Node.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="functions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="die.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

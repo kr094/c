@@ -78,13 +78,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="alloc.h" />
+    <ClInclude Include="die.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Node.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="alloc.c" />
+    <ClCompile Include="die.c" />
     <ClCompile Include="functions.c" />
     <ClCompile Include="List.c" />
     <ClCompile Include="main.c" />

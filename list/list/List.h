@@ -11,15 +11,11 @@ struct List {
 	node_t curr;
 	
 	long size;
-	long pool_size;
-	list_t pool;
 };
 
-list_t list_new(int pool_size);
+list_t list_new();
+list_t list_init(list_t list);
 void list_free(list_t list);
-void init_list(list_t list);
-void init_pool(list_t list);
-node_t list_get_free_node(list_t list);
 
 void list_add(list_t list, void *data);
 void list_push(list_t list, void *data);
