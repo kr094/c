@@ -121,8 +121,7 @@ node_t list_unqueue(list_t list) {
 }
 
 void list_print(list_t list) {
-	while(list_next(list))
-		node_print(list_peek(list));
+	while(node_print(list_peek(list))) list_next(list);
 }
 
 void list_printall(list_t list) {
@@ -135,12 +134,12 @@ node_t list_peek(list_t list) {
 }
 
 node_t list_seek(list_t list, int index) {
-	int i = 1;
-	if(index < 0) //|| index > list->size)
-		return list_clean(list);
+	int i;
+	if(index < 0)
+		return NULL;
 
 	list_start(list);
-	for(i; i != index; list_next(list), i++);
+	for(i = 1; i != index; list_next(list), i++);
 
 	return list_peek(list);
 }

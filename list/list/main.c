@@ -36,10 +36,6 @@ void test(list_t list) {
 	list_end(list);
 	while(node_print(list_peek(list))) list_prev(list);	
 	
-	list_prev(list);
-	list_print(list);
-	node_print(list_seek(list, 3));
-	
 	list_start(list);
 	while(node_print(list_pop(list)));
 }
