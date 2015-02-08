@@ -4,11 +4,23 @@ node_t node_new() {
 	node_t node;
 
 	alloc_struct(sizeof(struct Node),(void **) &node);
+	node->id = guid_new();
+	node_init(node);
+}
+
+node_t node_init(node_t node) {	
 	node->data = NULL;
 	node->next = NULL;
 	node->prev = NULL;
 
 	return node;
+}
+
+node_t node_blank() {
+	node_t node;
+
+	alloc_struct(sizeof(struct Node),(void **) &node);
+	return node_init(node);
 }
 
 node_t node_new_data(void *data) {
@@ -18,22 +30,27 @@ node_t node_new_data(void *data) {
 }
 
 node_t node_copy(node_t node) {
-	node_t copy = NULL;
+	node_t copy = node_blank();	
+	copy->id = node->id;
+	copy->data = node->data;
+	copy->next = node->next;
+	copy->prev = node->prev;
 
-	if(node) {
-		copy = node_new();
-		copy->data = node->data;
-		copy->next = node->next;
-		copy->prev = node->prev;
-	}
+	return copy;
+}
+
+node_t node_copy_public(node_t node) {
+	node_t copy = node_blank();
+	copy->id = node->id;
+	copy->data = node->data;
 
 	return copy;
 }
 
 int node_print(node_t node) {
 	if(node) {
-		//puts((char *) node->data);
-		printf("%d\n", node->data);
+		printf("%d", node->data);
+		printf("\t%s\n", node->id);
 	} else 
 		return 0;
 }

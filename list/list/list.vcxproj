@@ -83,6 +83,7 @@
     <ClInclude Include="functions.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="guid.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.c" />
@@ -91,6 +92,7 @@
     <ClCompile Include="List.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Node.c" />
+    <ClCompile Include="guid.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,7 +12,6 @@ list_t list_init(list_t list) {
 	list->tail = NULL;
 	list->prev = NULL;
 	list->curr = NULL;
-	list->size = 0;
 
 	return list;
 }
@@ -27,12 +26,9 @@ void list_free(list_t list) {
 	list = NULL;
 }
 
-void list_inc_size(list_t list) {
-	list->size++;
-}
-
-void list_dec_size(list_t list) {
-	list->size--;
+node_t list_clean(list_t list) {
+	list_init(list);
+	return NULL;
 }
 
 void list_set_head(list_t list, node_t node) {
@@ -40,16 +36,16 @@ void list_set_head(list_t list, node_t node) {
 
 	if(!list->curr) {
 		list->curr = list->head;
-		list->prev = list->head;
+		list->prev = NULL;
 	}
 }
 
 void list_set_tail(list_t list, node_t node) {
 	list->tail = node;	
 
-	if(!list->prev) {
+	if(!list->curr) {
 		list->curr = list->head;
-		list->prev = list->head;
+		list->prev = NULL;
 	}
 }
 
@@ -70,8 +66,6 @@ void list_add_node(list_t list, node_t node) {
 		list->tail->next = node;
 		list->tail = node;
 	}
-
-	list_inc_size(list);
 }
 
 void list_push(list_t list, void *data) {
@@ -88,8 +82,6 @@ void list_push_node(list_t list, node_t node) {
 		list->head->prev = node;
 		list_set_head(list, node);
 	}
-
-	list_inc_size(list);
 }
 
 node_t list_pop(list_t list) {
@@ -97,9 +89,9 @@ node_t list_pop(list_t list) {
 	node_t temp = NULL;
 
 	if(!list->head)
-		return NULL;
+		return list_clean(list);
 	
-	node = node_new_data(list->head->data);
+	node = node_copy_public(list->head);
 	temp = list->head->next;
 
 	if(temp)
@@ -107,7 +99,6 @@ node_t list_pop(list_t list) {
 
 	node_free(list->head);	
 	list_set_head(list, temp);
-	list_dec_size(list);
 	return node;
 }
 
@@ -116,17 +107,16 @@ node_t list_unqueue(list_t list) {
 	node_t temp = NULL;
 
 	if(!list->tail)
-		return NULL;
+		return list_clean(list);
 
-	node = node_new_data(list->tail->data);
+	node = node_copy_public(list->tail);
 	temp = list->tail->prev;
 
 	if(temp) 
 		temp->next = NULL;
 
 	node_free(list->tail);
-	list_set_tail(list, temp);		
-	list_dec_size(list);
+	list_set_tail(list, temp);
 	return node;
 }
 
@@ -146,8 +136,8 @@ node_t list_peek(list_t list) {
 
 node_t list_seek(list_t list, int index) {
 	int i = 1;
-	if(index < 0 || index > list->size)
-		return NULL;
+	if(index < 0) //|| index > list->size)
+		return list_clean(list);
 
 	list_start(list);
 	for(i; i != index; list_next(list), i++);
@@ -157,7 +147,7 @@ node_t list_seek(list_t list, int index) {
 
 node_t list_start(list_t list) {
 	if(!list->head)
-		return NULL;
+		return list_clean(list);
 
 	if(list->curr != list->head) {
 		list->curr = list->head;
@@ -167,32 +157,41 @@ node_t list_start(list_t list) {
 	return list_peek(list);
 }
 
-node_t list_end(list_t list) {
+void list_end(list_t list) {
 	if(!list->head)
-		return NULL;
+		list_clean(list);
 
-	if(list->curr->next)
+	if(list->curr != list->tail)
 		list->curr = list->tail;
-
-	return list_peek(list);
 }
 
 node_t list_next(list_t list) {
-	if(!list->size)
-		return NULL;
+	if(!list->head)
+		return list_clean(list);
 
-	list->prev = list->curr;
-	list->curr = list->curr->next;
+	if(!list->curr->next) {
+		list->curr = NULL;
+	} else {
+		list->prev = list->curr;
+		list->curr = list->curr->next;
+	}
 
 	return list_peek(list);
 }
 
 node_t list_prev(list_t list) {
-	if(!list->size)
-		return NULL;
+	if(!list->head)
+		return list_clean(list);
 
-	list->curr = list->prev;
-	list->prev = list->curr->prev;
+	if(!list->curr) {
+		list->curr = list->prev->prev;
+	} else if(!list->curr->prev) {
+		list->prev = list->curr;
+		list->curr = NULL;
+	} else {
+		list->prev = list->curr;
+		list->curr = list->curr->prev;
+	}
 
 	return list_peek(list);
 }
