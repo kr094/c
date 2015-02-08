@@ -2,7 +2,6 @@
 #define _NODE_H_
 #include "alloc.h"
 #include "guid.h"
-#include <time.h>
 typedef struct Node *node_t;
 
 struct Node {

@@ -5,7 +5,7 @@ node_t node_new() {
 
 	alloc_struct(sizeof(struct Node),(void **) &node);
 	node->id = guid_new();
-	node_init(node);
+	return node_init(node);
 }
 
 node_t node_init(node_t node) {	
@@ -48,11 +48,13 @@ node_t node_copy_public(node_t node) {
 }
 
 int node_print(node_t node) {
-	if(node) {
-		printf("%d", node->data);
-		printf("\t%s\n", node->id);
-	} else 
+	if(!node)
 		return 0;
+
+	printf("%d", node->data);
+	printf("\t%s\n", node->id);
+	
+	return 1;
 }
 
 void node_free(node_t node) {
