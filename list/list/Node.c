@@ -30,11 +30,12 @@ node_t node_copy(node_t node) {
 	return copy;
 }
 
-void node_print(node_t node) {
+int node_print(node_t node) {
 	if(node) {
 		//puts((char *) node->data);
 		printf("%d\n", node->data);
-	}
+	} else 
+		return 0;
 }
 
 void node_free(node_t node) {

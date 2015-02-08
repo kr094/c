@@ -38,12 +38,19 @@ void list_dec_size(list_t list) {
 void list_set_head(list_t list, node_t node) {
 	list->head = node;
 
-	if(!list->curr)
+	if(!list->curr) {
 		list->curr = list->head;
+		list->prev = list->head;
+	}
 }
 
 void list_set_tail(list_t list, node_t node) {
-	list->tail = node;
+	list->tail = node;	
+
+	if(!list->prev) {
+		list->curr = list->head;
+		list->prev = list->head;
+	}
 }
 
 void list_add(list_t list, void *data) {
@@ -149,6 +156,9 @@ node_t list_seek(list_t list, int index) {
 }
 
 node_t list_start(list_t list) {
+	if(!list->head)
+		return NULL;
+
 	if(list->curr != list->head) {
 		list->curr = list->head;
 		list->prev = NULL;
@@ -158,8 +168,11 @@ node_t list_start(list_t list) {
 }
 
 node_t list_end(list_t list) {
-	if(list->curr->next);
-		while(list_next(list));
+	if(!list->head)
+		return NULL;
+
+	if(list->curr->next)
+		list->curr = list->tail;
 
 	return list_peek(list);
 }

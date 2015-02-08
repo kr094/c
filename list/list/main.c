@@ -12,14 +12,6 @@ int main() {
 	return 0;
 }
 
-void list_dh(void *data) {
-	list_t list = (list_t) data;
-
-	printf("List size: %d\n", list->size);
-	list_free(list);
-	run();
-}
-
 void run() {
 	list_t list = list_new();
 	register_die_handler((die_handler) &list_dh, (void **) &list);
@@ -34,16 +26,11 @@ void test(list_t list) {
 	long i = 10;
 	node_t n = 0;
 
-	for(i = 1; i <= 100000; i++) {
-		list_push(list, (void *) i);
+	for(i = 1; i <= 5; i++) {
+		list_add(list, (void *) i);
 	}
 
-	while(n = list_unqueue(list))
-		node_print(n);
-
-	//for(i = 0; i < 3; i++) {		
-	//	node_print(list_pop(list));
-	//}
+	while(node_print(list_pop(list)));
 
 	//list_prev(list);
 	//list_print(list);
@@ -63,4 +50,12 @@ void manual_test(list_t list) {
 	}
 
 	list_printall(list);
+}
+
+void list_dh(void *data) {
+	list_t list = (list_t) data;
+
+	printf("List size: %d\n", list->size);
+	list_free(list);
+	run();
 }

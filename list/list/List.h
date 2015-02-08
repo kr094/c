@@ -1,5 +1,6 @@
 #ifndef _LIST_H_
 #define _LIST_H_
+#include "functions.h"
 #include "alloc.h"
 #include "Node.h"
 typedef struct List *list_t;

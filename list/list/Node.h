@@ -13,6 +13,6 @@ node_t node_new();
 node_t node_new_data(void *data);
 node_t node_copy(node_t node);
 
-void node_print(node_t node);
+int node_print(node_t node);
 void node_free(node_t node);
 #endif
