@@ -3,8 +3,7 @@
 char *guid_new() {
 	GUID pguid;
 	HRESULT res;
-	char guid[37];
-	char *string = (char *) malloc(sizeof(char) * _UNIQUE_ID_GUID_LENGTH);
+	char *string = (char *) malloc(sizeof(char) * _GUID_LENGTH_);
 
 	if(!string)
 		return NULL;
@@ -12,10 +11,8 @@ char *guid_new() {
 	res = CoCreateGuid(&pguid);
 
 	if(res == S_OK) {
-		guid_to_str(&pguid, guid);
+		guid_to_str(&pguid, string);
 	}
-
-	strcpy(string, guid);
 
 	return string;
 }

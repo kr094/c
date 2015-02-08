@@ -145,16 +145,12 @@ node_t list_seek(list_t list, int index) {
 	return list_peek(list);
 }
 
-node_t list_start(list_t list) {
+void list_start(list_t list) {
 	if(!list->head)
-		return list_clean(list);
+		list_clean(list);
 
-	if(list->curr != list->head) {
+	if(list->curr != list->head)
 		list->curr = list->head;
-		list->prev = NULL;
-	}
-
-	return list_peek(list);
 }
 
 void list_end(list_t list) {
@@ -184,7 +180,7 @@ node_t list_prev(list_t list) {
 		return list_clean(list);
 
 	if(!list->curr) {
-		list->curr = list->prev->prev;
+		list->curr = list->prev;
 	} else if(!list->curr->prev) {
 		list->prev = list->curr;
 		list->curr = NULL;

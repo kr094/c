@@ -26,7 +26,7 @@ void test(list_t list) {
 	long i = 10;
 	node_t n = 0;
 
-	for(i = 1; i <= 90000; i++) {
+	for(i = 1; i <= 5; i++) {
 		list_add(list, (void *) i);
 	}
 
@@ -34,22 +34,14 @@ void test(list_t list) {
 	while(node_print(list_peek(list))) list_next(list);
 
 	list_end(list);
-	while(node_print(list_peek(list))) list_prev(list);
-
-	//do node_print(list_peek(list));
-	//while(list_next(list));
-	//
-	//do node_print(list_peek(list));
-	//while(list_prev(list));
+	while(node_print(list_peek(list))) list_prev(list);	
+	
+	list_prev(list);
+	list_print(list);
+	node_print(list_seek(list, 3));
 	
 	list_start(list);
 	while(node_print(list_pop(list)));
-
-	//list_prev(list);
-	//list_print(list);
-	//node_print(list_seek(list, 3));
-	//node_print(list_start(list));
-	//node_print(list_end(list));
 }
 
 void manual_test(list_t list) {

@@ -1,6 +1,6 @@
-#ifndef _UNIQUE_ID_H_
-#define _UNIQUE_ID_H_
-#define _UNIQUE_ID_GUID_LENGTH 37
+#ifndef _GUID_H_
+#define _GUID_H_
+#define _GUID_LENGTH_ 37
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <Windows.h>
