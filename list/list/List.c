@@ -10,7 +10,6 @@ list_t list_new() {
 list_t list_init(list_t list) {
 	list->head = NULL;
 	list->tail = NULL;
-	list->prev = NULL;
 	list->curr = NULL;
 
 	return list;
@@ -36,7 +35,6 @@ void list_set_head(list_t list, node_t node) {
 
 	if(!list->curr) {
 		list->curr = list->head;
-		list->prev = NULL;
 	}
 }
 
@@ -45,7 +43,6 @@ void list_set_tail(list_t list, node_t node) {
 
 	if(!list->curr) {
 		list->curr = list->head;
-		list->prev = NULL;
 	}
 }
 
@@ -167,7 +164,6 @@ node_t list_next(list_t list) {
 	if(!list->curr->next) {
 		list->curr = NULL;
 	} else {
-		list->prev = list->curr;
 		list->curr = list->curr->next;
 	}
 
@@ -178,13 +174,9 @@ node_t list_prev(list_t list) {
 	if(!list->head)
 		return list_clean(list);
 
-	if(!list->curr) {
-		list->curr = list->prev;
-	} else if(!list->curr->prev) {
-		list->prev = list->curr;
+	if(!list->curr->prev) {
 		list->curr = NULL;
 	} else {
-		list->prev = list->curr;
 		list->curr = list->curr->prev;
 	}
 

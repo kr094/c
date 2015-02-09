@@ -26,7 +26,7 @@ void test(list_t list) {
 	long i = 10;
 	node_t n = 0;
 
-	for(i = 1; i <= 5; i++) {
+	for(i = 1; i <= 1000; i++) {
 		list_add(list, (void *) i);
 	}
 

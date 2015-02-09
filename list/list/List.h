@@ -8,25 +8,22 @@ typedef struct List *list_t;
 struct List {
 	node_t head;
 	node_t tail;
-	node_t prev;
 	node_t curr;
 };
 
 list_t list_new();
-list_t list_init(list_t list);
 void list_free(list_t list);
+list_t list_init(list_t list);
 node_t list_clean(list_t list);
 
 void list_add(list_t list, void *data);
-void list_push(list_t list, void *data);
-
 void list_add_node(list_t list, node_t node);
 node_t list_unqueue(list_t list);
 
+void list_push(list_t list, void *data);
 void list_push_node(list_t list, node_t node);
 node_t list_pop(list_t list);
 
-// Common
 void list_set_head(list_t list, node_t node);
 void list_set_tail(list_t list, node_t node);
 void list_print(list_t list);

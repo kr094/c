@@ -33,9 +33,6 @@
     <ClInclude Include="guid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="guid.win.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -56,7 +53,7 @@
     <ClCompile Include="alloc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="guid.win.c">
+    <ClCompile Include="guid.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
